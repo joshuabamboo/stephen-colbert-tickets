@@ -11,25 +11,37 @@ class TicketGrabber
     @num_of_tickets = num_of_tickets.to_s
   end
 
-  def get_tickets
+  def get_form
     mechanize = Mechanize.new
     # testing the script
-    page = mechanize.get("file:///Users/joshuaowens011/Development/code/stephen-colbert-tickets/ticket_form.html")
+    @page = mechanize.get("file:///Users/joshuaowens011/Development/code/stephen-colbert-tickets/ticket_form.html")
     # The Daily Show ticket form
     # page = mechanize.get("http://impresario.comedycentral.com/show/e0d100ed55c2dc9e")
-    form = page.forms[0]
-    form.firstname = @firstname
-    form.lastname = @lastname
-    form.zip = @zipcode
-    form.phone_daytime = @phone
-    form.email = @email
-    form.emailVerify = @email
-    form.field_with(:name => "tickets_number").option_with(:value => @num_of_tickets).click
-    form.field_with(:name => "country").option_with(:value => "US").click
-    # form.field_with(:name => "state").option_with(:value => "NY").click
-    # form.state = "NY"
-    form.checkbox_with(:name => "terms").check
-    page.links[8].click
+    @form = @page.forms[0]
+  end
+
+  def fill_out_form
+    @form.firstname = @firstname
+    @form.lastname = @lastname
+    @form.zip = @zipcode
+    @form.phone_daytime = @phone
+    @form.email = @email
+    @form.emailVerify = @email
+    @form.field_with(:name => "tickets_number").option_with(:value => @num_of_tickets).click
+    @form.field_with(:name => "country").option_with(:value => "US").click
+    # @form.field_with(:name => "state").option_with(:value => "NY").click
+    # @form.state = "NY"
+    @form.checkbox_with(:name => "terms").check
+  end
+
+  def submit_form
+    @page.links[8].click
+  end
+
+  def get_tickets
+    get_form
+    fill_out_form
+    submit_form
   end
 end
 
