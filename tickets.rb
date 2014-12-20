@@ -1,0 +1,37 @@
+class TicketGrabber
+  require 'mechanize'
+  require 'pry'
+
+  def initialize(firstname, lastname, zipcode, phone, email, num_of_tickets)
+    @firstname = firstname
+    @lastname = lastname
+    @zipcode = zipcode
+    @phone = phone
+    @email = email
+    @num_of_tickets = num_of_tickets.to_s
+  end
+
+  def get_tickets
+    mechanize = Mechanize.new
+    # testing the script
+    page = mechanize.get("file:///Users/joshuaowens011/Development/code/stephen-colbert-tickets/ticket_form.html")
+    # The Daily Show ticket form
+    # page = mechanize.get("http://impresario.comedycentral.com/show/e0d100ed55c2dc9e")
+    form = page.forms[0]
+    form.firstname = @firstname
+    form.lastname = @lastname
+    form.zip = @zipcode
+    form.phone_daytime = @phone
+    form.email = @email
+    form.emailVerify = @email
+    form.field_with(:name => "tickets_number").option_with(:value => @num_of_tickets).click
+    form.field_with(:name => "country").option_with(:value => "US").click
+    # form.field_with(:name => "state").option_with(:value => "NY").click
+    # form.state = "NY"
+    form.checkbox_with(:name => "terms").check
+    page.links[8].click
+  end
+end
+
+t = TicketGrabber.new("Joshua", "Owens", 11238, 3473622309, "joshuaowens011@gmail.com", 2)
+t.get_tickets
