@@ -29,8 +29,8 @@ class TicketGrabber
     @form.emailVerify = @email
     @form.field_with(:name => "tickets_number").option_with(:value => @num_of_tickets).click
     @form.field_with(:name => "country").option_with(:value => "US").click
-    # @form.field_with(:name => "state").option_with(:value => "NY").click
-    # @form.state = "NY"
+    @form.field_with(:name => "state").option_with(:value => "NY").click
+    @form.state = "NY"
     @form.checkbox_with(:name => "terms").check
   end
 
