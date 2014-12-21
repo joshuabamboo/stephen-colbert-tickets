@@ -21,6 +21,14 @@ class TicketGrabber
   end
 
   def fill_out_form
+    # form.fields[0].value = "Joshua"
+    # form.fields[1].value = "Owens"
+    # form.fields[2].value = "11238"
+    # form.fields[3].value = "3473622309"
+    # form.fields[4].value = "3473622309"
+    # form.fields[5].value = "3473622309"
+    # form.fields[6].value = "joshuaowens011@gmail.com"
+    # form.fields[7].value = "joshuaowens011@gmail.com"
     @form.firstname = @firstname
     @form.lastname = @lastname
     @form.zip = @zipcode
